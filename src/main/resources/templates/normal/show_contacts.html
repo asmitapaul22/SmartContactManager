@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+<section class="">
+<div class="card ml-3 mr-3">
+	<div class="card-body">
+	<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+ 			 <p class="text-center" th:text="${session.message.content}"></p>
+ 			 <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div>
+	<h1 class="text-center">Your Contacts</h1>
+	<!-- SEARCH -->
+	<div class="search-container my-3">
+	<input onKeyUp="search()" id="search-input" type="text" class="form-control" placeholder="Search Your Contacts"/>
+	<div class="search-result">
+	<h2>This is search result</h2>
+	
+	</div>
+	</div>
+	<div class="table-responsive">
+	<table class="table">
+  <thead>
+  
+    <tr>
+      <th scope="col">Id</th>
+      
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="c : ${contacts}">
+    
+      <th scope="row" th:text="${'SCM'+c.cId}">1</th>
+      <td>
+      <a th:href="@{'/user/contact/'+${c.cId}}">
+      <img th:src="@{'/images/'+${c.image}}" class="profile_pic" alt="profile-pic" />
+      
+      <span th:text="${c.name}+' '+'('+${c.secondName}+')'"></span>
+      </a>
+      </td>
+      <td th:text="${c.email}"></td>
+      <td th:text="${c.phone}"></td>
+      <td>
+      <!-- direct without using sweetalert => google it -->
+      <!-- <a th:href="@{'/user/delete/'+${c.cId}}" class="btn btn-danger btn-sm">Delete</a> -->
+      <!-- with using sweetAlert refer the js script and cdn written in base.html file and calling the function on click over here -->
+      <a href="#" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-sm">Delete</a>
+      <a th:href="@{'/user/update-contact/'+${c.cId}}" class="btn btn-success btn-sm">Update</a>
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+<!-- pagination -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" th:if="${currentPage != 0}" th:href="@{'/user/show-contacts/'+${currentPage-1}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item"
+    th:classappend="${currentPage==i-1?'active':''}"
+     th:each="i : ${#numbers.sequence(1,totalPages)}"}>
+     <a class="page-link" 
+     th:href="@{'/user/show-contacts/'+${i-1}}" th:text="${i}"></a></li>
+    
+    <li class="page-item" >
+      <a class="page-link" th:if="${currentPage+1 != totalPages}" th:href="@{'/user/show-contacts/'+${currentPage+1}}"aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+</section>
+	
+</body>
+</html>

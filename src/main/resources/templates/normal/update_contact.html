@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="normal/base::layout(~{::section})">
+<head>
+	<meta charset="UTF-8" />
+	<title>Document</title>
+</head>
+<body>
+<section >
+
+<div class="card card2 mx-auto">
+	<div class="card-body">
+	<!-- <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
+ 			 <p class="text-center" th:text="${session.message.content}"></p>
+ 			 <th:block th:text="${#session.removeAttribute('message')}"></th:block>
+			</div> -->
+	<h1 class="text-center">Update Contact</h1>
+		<div class="container-fluid mt-1 ">
+			<div class="row">
+				<div class="col-md-10 offset-md-1">
+				<!-- enctype because we are sending images as a data also -->
+				<form action="#" th:object="${contact}" 
+				enctype="multipart/form-data" method="POST" 
+				th:action="@{/user/process-contact-update/}" class="mt-2">
+				
+				<!-- TO GGET THE CID -->
+				<input type="hidden" th:value="${contact.cId}" name="cId" />
+				<!-- FIRST NAME -->
+				<div class="input-group">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					<i class="fa fa-plus"></i>
+					</div>
+					</div>
+					<input type="text" id="firstName"
+					th:value="${contact.name}" th:classappend="${#fields.hasErrors('name')?'is-invalid':''}"
+					 name="name" placeholder="Enter Name here" class="form-control"/>
+					  <div id="validationServer03Feedback" class="invalid-feedback" th:each="e :${#fields.errors('name')}">
+        			<p th:text="${e}"></p>
+      				</div>
+				</div>
+				<!-- 	SECOND NAME -->
+				<div class="input-group mt-3">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					<i class="fas fa-user-alt"></i>
+					</div>
+					</div>
+					<input type="text" id="secondName"
+					th:value="${contact.secondName}" th:classappend="${#fields.hasErrors('secondName')?'is-invalid':''}"
+					 name="secondName" placeholder="Enter Nick Name here" class="form-control"/>
+					 <div id="validationServer03Feedback" class="invalid-feedback" th:each="e :${#fields.errors('secondName')}">
+        			<p th:text="${e}"></p>
+      				</div>
+				</div>
+				<!-- PHONE -->
+				<div class="input-group mt-3">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					<i class="fa fa-phone"></i>
+					</div>
+					</div>
+					<input type="number" id="phone" name="phone"
+					th:value="${contact.phone}" th:classappend="${#fields.hasErrors('phone')?'is-invalid':''}"
+					 placeholder="Enter Phone Number here" class="form-control"/>
+					 <div id="validationServer03Feedback" class="invalid-feedback" th:each="e :${#fields.errors('phone')}">
+        			<p th:text="${e}"></p>
+      				</div>
+				</div>
+				<!-- EMAIL -->
+				<div class="input-group mt-3">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					@
+					</div>
+					</div>
+					<input type="email" id="email" name="email" 
+					th:value="${contact.email}" th:classappend="${#fields.hasErrors('email')?'is-invalid':''}"
+					placeholder="Enter Email here" class="form-control"/>
+					<div id="validationServer03Feedback" class="invalid-feedback" th:each="e :${#fields.errors('email')}">
+        			<p th:text="${e}"></p>
+      				</div>
+				</div>
+				<!-- WORK FIELD-->
+				<div class="input-group mt-3">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					<i class="fa fa-briefcase"></i>
+					</div>
+					</div>
+					<input type="text" id="work" name="work" 
+					th:value="${contact.work}" th:classappend="${#fields.hasErrors('work')?'is-invalid':''}"
+					placeholder="Enter work here" class="form-control"/>
+					<div id="validationServer03Feedback" class="invalid-feedback" th:each="e :${#fields.errors('work')}">
+        			<p th:text="${e}"></p>
+      				</div>
+				</div>
+				<!-- CONTACT DESCRIPTION -->
+				<div class="form-grop mt-3">
+				<textarea name="description" th:text="${contact.description}" id="description" rows="8" class="form-control" placeholder="Enter Contact Description"></textarea>
+				</div>
+				<!-- IMAGE -->
+				<div class="container text-center mt-2">
+				<img style="height:250px;width:250px;border-radius:50%;" th:src="@{'/images/'+${contact.image}}" alt="" />
+				</div>
+				<h5 class="text-secondary">Choose new profile picture:</h5>
+				<div class="input-group mt-3">
+					<div class="input-group-prepend">
+					<div class="input-group-text">
+					<i class="fas fa-camera"></i>
+					</div>
+					</div>
+					<input type="file" id="image" name="profileImage"  placeholder="Upload Profile Image" class="form-control"/>
+			<!--  	 <div id="validationServer03Feedback"  class="invalid-feedback " th:classappend="${value}?'is-invalid':''">
+        			<p th:text="${filing}"></p>
+      				</div>  -->
+      				
+      				
+				</div>
+				<div class="container text-center mt-3">
+				<button type="submit" class="btn contact-btn">Update Contact</button>
+				</div>
+				</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</section>
+	
+</body>
+</html>
